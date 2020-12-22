@@ -1,0 +1,781 @@
+<html>
+
+<head>
+  <title>Chalo</title>
+      <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+
+</head>
+
+<body>
+    
+    <div class="text-center">
+        <img src="./images/ok.jpeg" alt="" width="120" height="120">
+      </div>
+
+</br>
+ <div> <h1>API Documentation</h1></div>
+ 
+
+  <p>The list of APIs avaialble for Chalo.</p>
+</br>
+
+
+<!--Instruction-->
+ 
+    <h4>General Instruction:</h4>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td>The base URL:</td>
+                <td><a href="https://okchalo.net/node">https://okchalo.net/node</a></td>
+            </tr>
+            <tr>
+                <td>Current Version:</td>
+                <td>1.0</td>
+            </tr>
+            <tr>
+                <td>Last Updated:</td>
+                <td>30-Oct-2020</td>
+            </tr>
+            <tr>
+                <td>Note:</td>
+                <td>Use Postman to check all APIs. Headers for POST and PUT - Content Type : Application/Json. Use raw (json) for the body content.</td>
+            </tr>
+        </tbody>
+    </table>
+  
+
+</br>
+  <!--Languages-->
+  <div class="bs-example">
+    <h4>Languages:</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Purpose</th>
+                <th>Link</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>List all active languages</td>
+                <td>api/v1.0/languages/list</td>
+                <td>JSON result</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get language by id</td>
+                <td>api/v1.0/languages/get/:id</td>
+                <td>{
+                    "language_id": 1,
+                    "language": "English",
+                    "active": 1
+                }</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>Create new language</td>
+                <td>api/v1.0/languages/create</td>
+                <td>{
+                  "language":"English	en",
+                  "active": 0
+              }</td>
+            </tr>            
+        </tbody>
+    </table>
+  </div>
+
+</br>
+<!--Verifications and OTP-->
+<div class="bs-example">
+  <h4>OTP/Verifications:</h4>
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th>Request</th>
+              <th>Purpose</th>
+              <th>Link</th>
+              <th>Remarks</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>POST</td>
+              <td>Generate OTP by sending mobile number and Usertype</td>
+              <td>api/v1.0/otp/genOTP</td>
+              <td>{
+                "user_type":"C",
+                "mobile_number":"8888855555"
+            }</td>
+          </tr>
+          <tr>
+              <td>PUT</td>
+              <td>Update status after verification</td>
+              <td>api/v1.0/otp/verified/:id</td>
+              <td>Json result</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+</br>
+<!--Languages-->
+<div class="bs-example">
+    <h4>Blood Groups:</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Purpose</th>
+                <th>Link</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>List all active blood group</td>
+                <td>api/v1.0/bloodgroups/list</td>
+                <td>JSON result</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>Create new blood group</td>
+                <td>api/v1.0/bloodgroups/create</td>
+                <td>{
+                    "blood_group": "B positive (B+)"
+                }</td>
+            </tr>            
+        </tbody>
+    </table>
+  </div>
+
+</br>
+   <!--Customer-->
+   <div class="bs-example">
+    <h4>Customers/Passengers:</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Purpose</th>
+                <th>Link</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>Get customers list</td>
+                <td>api/v1.0/customers/list</td>
+                <td>JSON result</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get a customer by id</td>
+                <td>api/v1.0/customers/get/:id</td>
+                <td>{
+                    "customer_id": 1,
+                    "first_name": "first customer",
+                    "last_name": "last name",
+                    "mobile_number": "8989898989",
+                    "passcode": null,
+                    "salt": null,
+                    "hash": null,
+                    "gender": "M",
+                    "date_of_birth": null,
+                    "emergency_contact": null,
+                    "blood_group_id": "1",
+                    "country_id": 1,
+                    "city": "Chennai",
+                    "language_id": 1,
+                    "registered_date": "2020-09-10T06:48:34.000Z",
+                    "activation_status": null,
+                    "last_active_date": null,
+                    "default_range": 1000,
+                    "last_pin_changed": null,
+                    "profile_picture": null,
+                    "blocked": null
+                }</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get a customer by id</td>
+                <td>api/v1.0/customers/profile/:mobile_number</td>
+                <td>{
+                    "customer_id": 1,
+                    "first_name": "first customer",
+                    "last_name": "last name",
+                    "mobile_number": "8989898989",
+                    "passcode": null,
+                    "salt": null,
+                    "hash": null,
+                    "gender": "M",
+                    "date_of_birth": null,
+                    "emergency_contact": null,
+                    "blood_group_id": 1,
+                    "country_id": 1,
+                    "city": "Chennai",
+                    "language_id": 1,
+                    "registered_date": "2020-09-10T06:48:34.000Z",
+                    "activation_status": null,
+                    "last_active_date": null,
+                    "default_range": 1000,
+                    "last_pin_changed": null,
+                    "profile_picture": null,
+                    "blocked": null,
+                    "language": "English",
+                    "active": 1,
+                    "blood_group": "A positive (A+)"
+                }</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>create new customer</td>
+                <td>api/v1.0/customers/create</td>
+                <td>{
+                    "first_name":"Arjun",
+                    "last_name":"RD",
+                    "mobile_number": "777777777",
+                    "gender": "M",
+                    "blood_group_id":"1",
+                    "country_id": "1",
+                    "city": "Chennai",
+                    "language_id": 1
+                }</td>
+            </tr>            
+        </tbody>
+    </table>
+  </div>
+
+</br>
+   <!--Driver-->
+   <div class="bs-example">
+    <h4>Drivers:</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Purpose</th>
+                <th>Link</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>Get driver list</td>
+                <td>api/v1.0/drivers/list</td>
+                <td>JSON result</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get driver details by id</td>
+                <td>api/v1.0/drivers/get/:id</td>
+                <td>{
+                    "driver_id": 2,
+                    "first_name": "Driver Arjun",
+                    "last_name": "D",
+                    "mobile_number": "4567345671",
+                    "passcode": null,
+                    "salt": null,
+                    "hash": null,
+                    "gender": "M",
+                    "date_of_birth": null,
+                    "emergency_contact": null,
+                    "blood_group_id": 1,
+                    "country_id": 1,
+                    "city": "Chennai",
+                    "language_id": 1,
+                    "registered_date": "2020-09-10T11:30:15.000Z",
+                    "activation_status": null,
+                    "last_active_date": null,
+                    "default_range": 1000,
+                    "last_pin_changed": null,
+                    "driver_picture": null,
+                    "blocked": null
+                }</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get driver details by mobile number</td>
+                <td>api/v1.0/drivers/profile/:mobile_number</td>
+                <td>{
+                    "driver_id": 1,
+                    "first_name": "driver Name",
+                    "last_name": "last name",
+                    "mobile_number": "8989898989",
+                    "passcode": null,
+                    "salt": null,
+                    "hash": null,
+                    "gender": "M",
+                    "date_of_birth": null,
+                    "emergency_contact": null,
+                    "blood_group_id": 1,
+                    "country_id": 1,
+                    "city": "Chennai",
+                    "language_id": 1,
+                    "registered_date": "2020-09-10T11:27:17.000Z",
+                    "activation_status": null,
+                    "last_active_date": null,
+                    "default_range": 1000,
+                    "last_pin_changed": null,
+                    "driver_picture": null,
+                    "blocked": null,
+                    "language": "English",
+                    "active": 1,
+                    "blood_group": "A positive (A+)"
+                }</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>create a new driver</td>
+                <td>api/v1.0/drivers/create/</td>
+                <td>{
+                    "first_name":"Driver Arun",
+                    "last_name":"D",
+                    "mobile_number": "878787878",
+                    "gender": "M",
+                    "blood_group_id":"1",
+                    "country_id": "1",
+                    "city": "Chennai",
+                    "language_id": 1
+                }</td>
+            </tr>            
+        </tbody>
+    </table>
+  </div>
+
+</br>
+   <!--Make-->
+   <div class="bs-example">
+    <h4>Make:</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Purpose</th>
+                <th>Link</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>Get make list</td>
+                <td>api/v1.0/make/list</td>
+                <td>JSON result</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get make by id</td>
+                <td>api/v1.0/make/get/:id</td>
+                <td>Json result</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>Add new make</td>
+                <td>api/v1.0/make/create</td>
+                <td>{
+                  "brand_name":"mahindra motors"
+              }</td>
+            </tr>            
+        </tbody>
+    </table>
+  </div>
+</br>
+
+ <!--Make-->
+ <div class="bs-example">
+    <h4>Vehicle Types:</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Purpose</th>
+                <th>Link</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>Get vehicle type list</td>
+                <td>api/v1.0/vtype/list</td>
+                <td>{
+                    "vehicle_type_id": 1,
+                    "vehicle_type": "Car"
+                }</td>
+            </tr>                     
+        </tbody>
+    </table>
+  </div>
+</br>
+
+ <!--Vehicle-->
+ <div class="bs-example">
+    <h4>Vehicle</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Purpose</th>
+                <th>Link</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>POST</td>
+                <td>Add new vehcile</td>
+                <td>api/v1.0/vehicle/create</td>
+                <td>{
+                    "vehicle_type_id": 1,
+                    "driver_id":1,
+                    "vehicle_registration_number":"TN10HK1234",
+                    "capacity":4,
+                    "active":false
+                }</td>
+            </tr>    
+            <tr>
+                <td>GET</td>
+                <td>Get vehicle list</td>
+                <td>api/v1.0/vehicle/list</td>
+                <td>[
+                    {
+                        "vehicle_id": 1,
+                        "vehicle_type_id": 1,
+                        "vehicle_type": "Car",
+                        "driver_id": 1,
+                        "first_name": "driver Name",
+                        "last_name": "last name",
+                        "vehicle_registration_number": "TN10HK1234",
+                        "capacity": 4,
+                        "active": 0
+                    }
+                ]</td>
+            </tr> 
+            <tr>
+                <td>GET</td>
+                <td>Get vehicle by vehicle id</td>
+                <td>api/v1.0/vehicle/get_by_vehicle_id/1</td>
+                <td>[
+                    {
+                        "vehicle_id": 1,
+                        "vehicle_type_id": 1,
+                        "vehicle_type": "Car",
+                        "driver_id": 1,
+                        "first_name": "driver Name",
+                        "last_name": "last name",
+                        "vehicle_registration_number": "TN10HK1234",
+                        "capacity": 4,
+                        "active": 0
+                    }
+                ]</td>
+            </tr>  
+            <tr>
+                <td>GET</td>
+                <td>Get all vehicle by driver id</td>
+                <td>api/v1.0/vehicle/get_driver_vehicles/1</td>
+                <td>{
+                    "vehicle_id": 1,
+                    "vehicle_type_id": 1,
+                    "vehicle_type": "Car",
+                    "driver_id": 1,
+                    "first_name": "driver Name",
+                    "last_name": "last name",
+                    "vehicle_registration_number": "TN10HK1234",
+                    "capacity": 4,
+                    "active": 0
+                }</td>
+            </tr> 
+            <tr>
+                <td>PUT</td>
+                <td>Update vehicle live status to get rides. Use True to go live and false to go offline by vehicle id</td>
+                <td>api/v1.0/vehicle/set_live_status/1</td>
+                <td>{
+                    "active":false
+                }</td>
+            </tr>                           
+        </tbody>
+    </table>
+  </div>
+</br>
+
+   <!--Admin Users-->
+  <div class="bs-example">
+  <h4>Admin Users:</h4>
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th>Request</th>
+              <th>Purpose</th>
+              <th>Link</th>
+              <th>Remarks</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>GET</td>
+              <td>Get admin users list</td>
+              <td>api/v1.0/admin/list</td>
+              <td>JSON result</td>
+          </tr>
+          <tr>
+              <td>GET</td>
+              <td>Get admin user by id</td>
+              <td>api/v1.0/admin/get/:id</td>
+              <td>{
+                "admin_id": 1,
+                "first_name": "super",
+                "last_name": "admin",
+                "username": "sa",
+                "password": "123456",
+                "email": "sa@chalo.com",
+                "mobile_number": "9101010101",
+                "role_id": 1,
+                "created_datetime": "2020-08-24T18:27:36.000Z",
+                "active": 0
+            }</td>
+          </tr>
+          <tr>
+              <td>POST</td>
+              <td>Add new admin user</td>
+              <td>api/v1.0/admin/create</td>
+              <td>{
+                "id": 1,
+                "first_name": "super",
+                "last_name": "admin",
+                "username": "sa",
+                "password": "ok123",
+                "email": "ok@chalo.com",
+                "mobile_number": "8989898989",
+                "role_id": 1,
+                "created_datetime": "2020-09-05 11:32:43",
+                "active": 0
+            }</td>
+          </tr>            
+      </tbody>
+  </table>
+
+  </div>
+
+<!--Ride details-->
+<div class="bs-example">
+    <h4>Ride APIs</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Purpose</th>
+                <th>Link</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>Get list of available status</td>
+                <td>/api/v1.0/ride/status</td>
+                <td>[
+                    {
+                        "status_id": 1,
+                        "status": "Requested"
+                    },
+                    {
+                        "status_id": 2,
+                        "status": "Confirmed"
+                    },
+                    {
+                        "status_id": 3,
+                        "status": "Cancelled"
+                    },
+                    {
+                        "status_id": 4,
+                        "status": "Rejected"
+                    },
+                    {
+                        "status_id": 5,
+                        "status": "Started"
+                    },
+                    {
+                        "status_id": 6,
+                        "status": "On Ride"
+                    },
+                    {
+                        "status_id": 7,
+                        "status": "Completed"
+                    }
+                ]</td>
+            </tr>
+
+            <tr>
+                <td>POST</td>
+                <td>Post a new ride request</td>
+                <td>/api/v1.0/ride/create</td>
+                <td>Post value: {
+                    "customer_id" : "1",
+                    "pickup_address" : "Nungambakkam",
+                    "pickup_gps": "13.065729, 80.232978",
+                    "drop_address" : "Mylapore",
+                    "drop_gps" : "13.036963, 80.267907",
+                    "status_id" : 1,
+                    "pickup_lat" : "13.065729",
+                    "pickup_lng" : "80.232978",
+                    "drop_lat" : "13.036963",
+                    "drop_lng" : "80.267907"
+                }</td>
+            </tr>
+
+        
+            <tr>
+                <td>GET</td>
+                <td>Get current requests of rides to driver</td>
+                <td>api/v1.0/ride/get_requests</td>
+                <td>[
+                    {
+                        "ride_id": 2,
+                        "requested_datetime": "2020-09-17T05:31:49.000Z",
+                        "customer_id": 2,
+                        "first_name": "Arjun",
+                        "last_name": "Doss",
+                        "gender": "M",
+                        "mobile_number": "999999999",
+                        "city": "Chennai",
+                        "pickup_address": "Chennai Pickup address",
+                        "pickup_gps": "13.027699, 80.185762",
+                        "drop_address": "Chennai Drop address",
+                        "drop_gps": "13.061831, 80.161024",
+                        "status_id": 1,
+                        "status": "Requested"
+                    }
+                ] </td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get all rides list</td>
+                <td>/api/v1.0/ride/all_rides</td>
+                <td>[
+                    {
+                        "ride_id": 1,
+                        "requested_datetime": "2020-09-17T05:11:43.000Z",
+                        "customer_id": 1,
+                        "pickup_address": "My 2nd pickup address",
+                        "pickup_gps": "13.027699, 80.185762",
+                        "drop_address": "my 2nd drop address",
+                        "drop_gps": "13.061831, 80.161024",
+                        "ride_start_time": null,
+                        "ride_end_time": null,
+                        "status_id": 1,
+                        "driver_id": null,
+                        "booking_number": null
+                    }
+                ]</td>
+            </tr>
+            <tr>
+                <td>PUT</td>
+                <td>confirm a ride by a driver</td>
+                <td>/api/v1.0/ride/confirm/:ride_id</td>
+                <td>{
+                    "driver_id":"1",
+                    "status_id": 2
+                }
+            </br>Unique pin is generated to a customer, this pin is verified before the ride starts.
+        </br>    
+            Response: {
+                    "id": "2",
+                    "confirm_otp": "4865",
+                    "status_id": 2,
+                    "driver_id": "3"
+                }
+            </td>
+            </tr>
+            <tr>
+                <td>PUT</td>
+                <td>confirm a ride with a unique PIN by ride id</td>
+                <td>/api/v1.0/otp/validatePIN/:ride_id</td>
+                <td>{
+                    "pin_number":4866 
+                }
+            </br>
+                Response:<b>confirmed</b> on success  and <b>incorrect</b> on incorrect pin
+            </td>
+            </tr>      
+            <tr>
+                <td>GET</td>
+                <td>get ride detials by driver.</td>
+                <td>/api/v1.0/ride/get/:ride_id</td>
+                <td>{
+                    "ride_id": 1,
+                    "requested_datetime": "2020-09-16T12:42:51.000Z",
+                    "customer_id": 1,
+                    "first_name": "first customer",
+                    "last_name": "last name",
+                    "gender": "M",
+                    "mobile_number": "8989898989",
+                    "city": "Chennai",
+                    "pickup_address": "My picup address",
+                    "pickup_gps": "13.027699, 80.185762",
+                    "drop_address": "my drop address",
+                    "drop_gps": "13.061831, 80.161024",
+                    "ride_start_time": null,
+                    "ride_end_time": null,
+                    "status_id": 2,
+                    "status": "Confirmed",
+                    "driver_fname": "driver Name",
+                    "driver_lname": "last name",
+                    "driver_mobile": "8989898989",
+                    "driver_gender": "M"
+                }</td>
+            </tr>             
+            <tr>
+                <td>POST</td>
+                <td>list rides only with in the radius.</td>
+                <td>/api/v1.0/ride/get_ride_byradius</td>
+                <td> Send current gps of Driver and prefered radius.
+                    {
+                    "driver_lat":"29.46786",
+                    "driver_lng":"-98.53506",
+                    "driver_radius":500
+                }
+                <br>
+                Response:
+                {
+                    "ride_id": 5,
+                    "requested_datetime": "2020-09-25T05:13:42.000Z",
+                    "customer_id": 1,
+                    "first_name": "first customer",
+                    "last_name": "last name",
+                    "gender": "M",
+                    "mobile_number": "8989898989",
+                    "city": "Chennai",
+                    "pickup_address": "Nungambakkam",
+                    "pickup_gps": "13.065729, 80.232978",
+                    "pickup_lat": "13.065729",
+                    "pickup_lng": "80.232978",
+                    "drop_address": "Mylapore",
+                    "drop_gps": "13.036963, 80.267907",
+                    "drop_lat": "13.036963",
+                    "drop_lng": "80.267907",
+                    "status_id": 1,
+                    "status": "Requested",
+                    "distance": 4.90504
+                }
+            </td>
+            </tr>
+        </tbody>
+    </table>
+  
+    </div>
+
+</body>
+
+</html>
