@@ -27,9 +27,11 @@ exports.create = (req, res) => {
     pickup_lat : req.body.pickup_lat,
     pickup_lng : req.body.pickup_lng,
     drop_lat : req.body.drop_lat,
-    drop_lng : req.body.drop_lng
+    drop_lng : req.body.drop_lng,
+    tip: req.body.tip
   });
 
+  console.log(ride_request)
   // Save admin user in the database
   Rides.create(ride_request, (err, data) => {
     if (err)
@@ -88,7 +90,12 @@ exports.confirm_ride = (req, res) => {
     res.status(400).send({
       message: "Content can not be empty!"
     });
+  }else{
+    res.send()
   }
+
+
+
 
   console.log(req.body);
   var objGeneric = require("../utils/generic.js");
