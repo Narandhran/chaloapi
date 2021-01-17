@@ -6,6 +6,9 @@ const ride = require("../controllers/ride.controller.js");
 // Create a new ride request
 router.post("/create", ride.create);
 
+router.post("/pasengerAccept", ride.pasengerAccept);
+
+
 // Retrieve all status id and status
 router.get("/status", ride.all_status);
 
@@ -16,7 +19,24 @@ router.get("/get_requests", ride.get_all_requests);
 router.get("/all_rides", ride.getAll);
 
 // confirm ride with driverid, statusid
-router.put("/confirm/:ride_id", ride.confirm_ride);
+// router.put("/confirm/:ride_id", ride.confirm_ride);
+router.put('/confirm/:ride_id', function (req, res) {
+  try{
+    return ride.confirm_ride(req,res)
+  }catch(error){
+    res.send(error)
+  }
+})
+
+
+router.put('/rideAcceptedByDriver/:ride_id', function (req, res) {
+  try{
+    return ride.rideAcceptedByDriver(req,res)
+  }catch(error){
+    res.send(error)
+  }
+})
+
 
 // Retrieve a single ride with ride_id
 router.get("/get/:ride_id", ride.rideById);
@@ -60,7 +80,7 @@ router.post('/start/:ride_id', function (req, res, next) {
       function (err, result) {
         if (err) throw err;
         else {
-          if (result[0].is_passenger_accept) {
+          if (result[0].passenger_accept) {
             var sql = 'UPDATE tbl_rides SET status_id = ?, ride_start_time = ? where ride_id = ?'
             var values = [
               5,
