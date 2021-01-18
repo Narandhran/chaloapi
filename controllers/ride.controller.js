@@ -44,6 +44,18 @@ exports.create = (req, res) => {
 };
 
 
+exports.pasengerAccept = (req, res) => {
+  Rides.pasengerAccept(req, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the ride."
+      });
+    else res.send(data);
+  });
+}
+
+
 // Retrieve all status and its id to be used in the application
 exports.all_status = (req, res) => {
   Rides.status_list((err, data) => {
@@ -84,20 +96,40 @@ exports.getAll = (req, res) => {
 
 
 // Update ride request with booking id, drive id, status id and booking number
+exports.rideAcceptedByDriver = (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+ 
+  Rides.driver_accept(
+    req.params.ride_id,
+    new Rides(req.body),
+    (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            message: `Not found ride request with ride_id ${req.params.ride_id}.`
+          });
+        } else {
+          res.status(500).send({
+            message: "Error confirming the booking with ride_id " + req.params.ride_id
+          });
+        }
+      } else res.send(data);
+    }
+  );
+  
+}
 exports.confirm_ride = (req, res) => {
   // Validate Request
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
-  }else{
-    res.send()
   }
 
-
-
-
-  console.log(req.body);
   var objGeneric = require("../utils/generic.js");
   var confirm_otp = objGeneric.generateOTP();
 
@@ -119,6 +151,7 @@ exports.confirm_ride = (req, res) => {
       } else res.send(data);
     }
   );
+
 };
 
 // Find a ride by ride_id

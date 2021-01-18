@@ -42,6 +42,29 @@ Ride.create = (newRide, result) => {
 };
 
 
+Ride.pasengerAccept = (req, result) => {
+
+  con.query(
+    "UPDATE tbl_rides SET passenger_accept = ?, driver_id =? WHERE ride_id = ?",
+    [1, req.body.customer_id, req.body.ride_id],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found otp details with the id
+        result({ kind: "not_found" }, null);
+        return;
+      }
+      req.body.pasengerAccept = true;
+      result(null, { ...req.body });
+    }
+  );
+}
+
 Ride.status_list = result => {
   con.query("SELECT * FROM tbl_status", (err, res) => {
     if (err) {
@@ -115,7 +138,8 @@ Ride.rideByGPS = (driver_lat, driver_lng, driver_radius, result) => {
     c.gender,c.mobile_number,c.city,
     r.pickup_address,r.pickup_gps,r.pickup_lat, r.pickup_lng, 
     r.drop_address,r.drop_gps, r.drop_lat, r.drop_lng,r.status_id,s.status, 
-    lat_lng_distance(r.pickup_lat,r.pickup_lng, ${driver_lat}, ${driver_lng}) distance 
+    lat_lng_distance(r.pickup_lat,r.pickup_lng, ${driver_lat}, ${driver_lng}) distance,
+    r.driver_accept, r.passenger_accept
     FROM tbl_rides r  JOIN tbl_customers c USING (customer_id) INNER JOIN tbl_status s USING (status_id) 
     where status_id = 1 and lat_lng_distance(pickup_lat,pickup_lng,${driver_lat}, ${driver_lng}) < ${driver_radius}/1000;`;
 
@@ -145,6 +169,28 @@ Ride.getAll = result => {
   });
 };
 
+Ride.driver_accept = (id, objConfirm, result) => {
+
+  con.query(
+    "UPDATE tbl_rides SET driver_accept = ?, driver_id =? WHERE ride_id = ?",
+    [objConfirm.driver_accept, objConfirm.driver_id, id],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found otp details with the id
+        result({ kind: "not_found" }, null);
+        return;
+      }
+      objConfirm.driver_accept = true;
+      result(null, { id: id, ...objConfirm });
+    }
+  );
+}
 
 Ride.confirm_booking = (id, confirm_otp, objConfirm, result) => {
   var b_number = "BN-" + id;
