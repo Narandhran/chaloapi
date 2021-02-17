@@ -55,9 +55,6 @@ exports.subscribe = (req, res) => {
         }
     });
 
-
-    // const payload = JSON.stringify({ title: `Hello!` });
-    // webpush.sendNotification(subscription, payload);
-
-
+    const payload = JSON.stringify({ title: `Hello!` });
+    webpush.sendNotification(subscription, payload);
 };
