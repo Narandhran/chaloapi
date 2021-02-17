@@ -27,4 +27,32 @@ WebPush.create = (newPush, result) => {
     });
 };
 
+
+WebPush.findById = (customer_id, result) => {
+    var sql = `select * from tbl_webpush WHERE customer_id = ${customer_id}`
+
+    con.query(sql, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        result(null, res);
+    });
+};
+
+WebPush.updateById = (data, result) => {
+    con.query(
+        "UPDATE tbl_webpush SET endpoint = ?, p256dh = ?, auth = ? WHERE customer_id = ?",
+        [data.endpoint, data.p256dh, data.auth, data.id],
+        (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(null, err);
+                return;
+            }
+            result(null, res);
+        }
+    );
+};
 module.exports = WebPush;

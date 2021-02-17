@@ -285,6 +285,7 @@ CREATE TABLE `tbl_rides` (
   `drop_lng` varchar(45) DEFAULT NULL,
   `tip` int(3) DEFAULT NULL,
   `is_passenger_accept` tinyint(1) DEFAULT 0,
+  `confirm_otp` int(5) DEFAULT 0
   PRIMARY KEY (`ride_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
