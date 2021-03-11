@@ -401,6 +401,30 @@ UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 
+
+
+--
+-- Table structure for table `tbl_token`
+--
+
+DROP TABLE IF EXISTS `tbl_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_token` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id`  varchar(10) DEFAULT NULL,
+  `type` int(11) NOT NULL,
+  `token` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_admin`
+--
+
+
+
 --
 -- Table structure for table `tbl_webpush`
 --

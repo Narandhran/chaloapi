@@ -4,7 +4,8 @@
 
 const Ride = require("../models/ride.model.js");
 const Rides = require("../models/ride.model.js");
-
+const Token = require("../models/token.model.js");
+let FCM = require("../helper/fcm");
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
@@ -17,29 +18,49 @@ exports.create = (req, res) => {
 
   // Create a new admin
   const ride_request = new Rides({
-    requested_datetime : cDateTime.getDateTime(),
-    customer_id : req.body.customer_id,
-    pickup_address : req.body.pickup_address,
-    pickup_gps : req.body.pickup_gps,
-    drop_address : req.body.drop_address,
-    drop_gps : req.body.drop_gps,
-    status_id : req.body.status_id,
-    pickup_lat : req.body.pickup_lat,
-    pickup_lng : req.body.pickup_lng,
-    drop_lat : req.body.drop_lat,
-    drop_lng : req.body.drop_lng,
+    requested_datetime: cDateTime.getDateTime(),
+    customer_id: req.body.customer_id,
+    pickup_address: req.body.pickup_address,
+    pickup_gps: req.body.pickup_gps,
+    drop_address: req.body.drop_address,
+    drop_gps: req.body.drop_gps,
+    status_id: req.body.status_id,
+    pickup_lat: req.body.pickup_lat,
+    pickup_lng: req.body.pickup_lng,
+    drop_lat: req.body.drop_lat,
+    drop_lng: req.body.drop_lng,
     tip: req.body.tip
   });
 
   console.log(ride_request)
   // Save admin user in the database
-  Rides.create(ride_request, (err, data) => {
+  Rides.create(ride_request, async (err, data) => {
     if (err)
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the ride."
       });
-    else res.send(data);
+    else {
+      await Token.findDriverTokens((err, data) => {
+        if (err)
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while creating the ride."
+          });
+        else {
+          let tokens = data.map(e => {
+            return e.token;
+          });
+          console.log('token: ' + tokens);
+          FCM.sendPushNofi.sendMulticast(
+            FCM.message('A ride has initiated', 'OkChalo', tokens)
+          ).then(result => {
+            console.log('result: ' + JSON.stringify(result));
+            res.send(result);
+          }).catch(e => { res.send(e) });
+        }
+      });
+    };
   });
 };
 
@@ -71,7 +92,7 @@ exports.all_status = (req, res) => {
 
 // Retrieve all customers from the database.
 exports.get_all_requests = (req, res) => {
-    Rides.get_all_requests((err, data) => {
+  Rides.get_all_requests((err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -102,7 +123,7 @@ exports.rideAcceptedByDriver = (req, res) => {
       message: "Content can not be empty!"
     });
   }
- 
+
   Rides.driver_accept(
     req.params.ride_id,
     new Rides(req.body),
@@ -117,10 +138,30 @@ exports.rideAcceptedByDriver = (req, res) => {
             message: "Error confirming the booking with ride_id " + req.params.ride_id
           });
         }
-      } else res.send(data);
+      } else {
+        Token.findByUserId(req.body.customer_id, (err, data1) => {
+          if (err) {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while fetching browser token."
+            });
+          } else {
+            let tokens = data1.map(e => {
+              return e.token;
+            });
+            FCM.sendPushNofi.sendMulticast(
+              FCM.message('A ride has been confirmed', 'OkChalo', tokens)
+            ).then(result => {
+              console.log('result: ' + JSON.stringify(result));
+              res.send(data);
+            }).catch(e => { res.send(e) });
+          }
+        });
+        res.send(data);
+      }
     }
   );
-  
+
 }
 exports.confirm_ride = (req, res) => {
   // Validate Request
@@ -156,12 +197,12 @@ exports.confirm_ride = (req, res) => {
 
 // Find a ride by ride_id
 exports.rideBygps_radius = (req, res) => {
-   var driver_lat = req.body.driver_lat,
-        driver_lng = req.body.driver_lng,
-        driver_radius = req.body.driver_radius;
-   
-  
-    Rides.rideByGPS(driver_lat, driver_lng, driver_radius, (err, data) => {
+  var driver_lat = req.body.driver_lat,
+    driver_lng = req.body.driver_lng,
+    driver_radius = req.body.driver_radius;
+
+
+  Rides.rideByGPS(driver_lat, driver_lng, driver_radius, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -178,8 +219,8 @@ exports.rideBygps_radius = (req, res) => {
 
 // Find a ride by ride_id
 exports.rideById = (req, res) => {
-	console.log(req.params.ride_id);
-    Rides.rideById(req.params.ride_id, (err, data) => {
+  console.log(req.params.ride_id);
+  Rides.rideById(req.params.ride_id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

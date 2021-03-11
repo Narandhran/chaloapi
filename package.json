@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "firebase-admin": "^9.5.0",
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
     "https": "^1.0.0",
