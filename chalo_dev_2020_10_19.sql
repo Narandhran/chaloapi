@@ -268,6 +268,7 @@ DROP TABLE IF EXISTS `tbl_rides`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_rides` (
   `ride_id` int(11) NOT NULL AUTO_INCREMENT,
+  `otp` int(5) DEFAULT 0,
   `requested_datetime` datetime DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `pickup_address` varchar(250) DEFAULT NULL,

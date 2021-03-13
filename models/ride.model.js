@@ -24,6 +24,7 @@ const Ride = function (objRide) {
   this.drop_lat = objRide.drop_lat;
   this.drop_lng = objRide.drop_lng;
   // this.confirm_otp = objRide.confirm_otp;
+  this.otp = objRide.otp;
   this.tip = objRide.tip;
 };
 
@@ -111,7 +112,7 @@ Ride.get_all_rides = result => {
 };
 
 Ride.rideById = (ride_id, result) => {
-  var sql = `SELECT r.ride_id, r.requested_datetime, r.customer_id, c.first_name, c.last_name, c.gender,c.mobile_number,c.city,r.pickup_address,r.pickup_gps,r.drop_address,r.drop_gps, r.ride_start_time,r.ride_end_time, r.status_id,s.status, d.first_name driver_fname, d.last_name driver_lname, d.mobile_number driver_mobile, d.gender driver_gender FROM tbl_rides r  JOIN tbl_customers c USING (customer_id) INNER JOIN tbl_drivers d USING(driver_id) INNER JOIN tbl_status s USING (status_id) where r.ride_id = ${ride_id}`
+  var sql = `SELECT r.ride_id,r.otp, r.requested_datetime, r.customer_id, c.first_name, c.last_name, c.gender,c.mobile_number,c.city,r.pickup_address,r.pickup_gps,r.drop_address,r.drop_gps, r.ride_start_time,r.ride_end_time, r.status_id,s.status, d.first_name driver_fname, d.last_name driver_lname, d.mobile_number driver_mobile, d.gender driver_gender FROM tbl_rides r  JOIN tbl_customers c USING (customer_id) INNER JOIN tbl_drivers d USING(driver_id) INNER JOIN tbl_status s USING (status_id) where r.ride_id = ${ride_id}`
 
   con.query(sql, (err, res) => {
     if (err) {
@@ -135,7 +136,7 @@ Ride.rideById = (ride_id, result) => {
 
 Ride.rideByGPS = (driver_lat, driver_lng, driver_radius, result) => {
   var sql = `SELECT r.ride_id, r.requested_datetime, r.customer_id, c.first_name, c.last_name, 
-    c.gender,c.mobile_number,c.city,
+    c.gender,c.mobile_number,c.city, r.otp,
     r.pickup_address,r.pickup_gps,r.pickup_lat, r.pickup_lng, 
     r.drop_address,r.drop_gps, r.drop_lat, r.drop_lng,r.status_id,s.status, 
     lat_lng_distance(r.pickup_lat,r.pickup_lng, ${driver_lat}, ${driver_lng}) distance,

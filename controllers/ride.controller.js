@@ -31,7 +31,7 @@ exports.create = (req, res) => {
     drop_lng: req.body.drop_lng,
     tip: req.body.tip
   });
-
+  ride_request.otp = cDateTime.generateOTP();
   console.log(ride_request)
   // Save admin user in the database
   Rides.create(ride_request, async (err, data) => {
