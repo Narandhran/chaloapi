@@ -412,8 +412,8 @@ DROP TABLE IF EXISTS `tbl_token`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_token` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id`  varchar(10) DEFAULT NULL,
-  `type` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `type` varchar(10) NOT NULL,
   `token` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;

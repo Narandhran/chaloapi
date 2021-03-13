@@ -41,14 +41,14 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the ride."
       });
     else {
-      await Token.findDriverTokens((err, data) => {
+      await Token.findDriverTokens((err, data1) => {
         if (err)
           res.status(500).send({
             message:
               err.message || "Some error occurred while creating the ride."
           });
         else {
-          let tokens = data.map(e => {
+          let tokens = data1.map(e => {
             return e.token;
           });
           console.log('token: ' + tokens);
@@ -56,7 +56,7 @@ exports.create = (req, res) => {
             FCM.message('A ride has initiated', 'OkChalo', tokens)
           ).then(result => {
             console.log('result: ' + JSON.stringify(result));
-            res.send(result);
+            res.send(data);
           }).catch(e => { res.send(e) });
         }
       });
@@ -157,7 +157,7 @@ exports.rideAcceptedByDriver = (req, res) => {
             }).catch(e => { res.send(e) });
           }
         });
-        res.send(data);
+        // res.send(data);
       }
     }
   );
