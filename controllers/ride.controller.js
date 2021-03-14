@@ -72,7 +72,26 @@ exports.pasengerAccept = (req, res) => {
         message:
           err.message || "Some error occurred while creating the ride."
       });
-    else res.send(data);
+    else {
+      Token.findByUserId(req.body.customer_id, (err, data1) => {
+        if (err) {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while fetching browser token."
+          });
+        } else {
+          let tokens = data1.map(e => {
+            return e.token;
+          });
+          FCM.sendPushNofi.sendMulticast(
+            FCM.message('Ride started!!', 'OkChalo', tokens)
+          ).then(result => {
+            console.log('result: ' + JSON.stringify(result));
+            res.send(data);
+          }).catch(e => { res.send(e) });
+        }
+      });
+    }
   });
 }
 
