@@ -1,3 +1,4 @@
+const { json } = require("body-parser");
 const Token = require("../models/token.model.js");
 
 exports.subscribe = (req, res) => {
@@ -16,7 +17,7 @@ exports.subscribe = (req, res) => {
             });
         else {
             if (data.length > 0) {
-                console.log('data: ' + JSON.stringify(data));
+                console.log('BODY-update: ' + JSON.stringify(data));
                 Token.updateByUserId(req.body, (err, data1) => {
                     if (err)
                         res.status(500).send({
@@ -29,6 +30,7 @@ exports.subscribe = (req, res) => {
                     }
                 });
             } else {
+                console.log('BODY-create: ' + JSON.stringify(req.body));
                 Token.createTkn(req.body, (err, data1) => {
                     if (err)
                         res.status(500).send({
