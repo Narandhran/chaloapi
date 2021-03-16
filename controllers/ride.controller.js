@@ -55,7 +55,7 @@ exports.create = (req, res) => {
           FCM.sendPushNofi.sendMulticast(
             FCM.message('A ride has initiated', 'OkChalo', tokens)
           ).then(result => {
-            console.log('result: ' + JSON.stringify(result));
+            console.log('RIDE INITIATED: ' + JSON.stringify(tokens));
             res.send(data);
           }).catch(e => { res.send(e) });
         }
@@ -86,7 +86,7 @@ exports.pasengerAccept = (req, res) => {
           FCM.sendPushNofi.sendMulticast(
             FCM.message('Ride started!!', 'OkChalo', tokens)
           ).then(result => {
-            console.log('result: ' + JSON.stringify(result));
+            console.log('RIDE STARTED: ' + JSON.stringify(tokens));
             res.send(data);
           }).catch(e => { res.send(e) });
         }
@@ -169,9 +169,9 @@ exports.rideAcceptedByDriver = (req, res) => {
               return e.token;
             });
             FCM.sendPushNofi.sendMulticast(
-              FCM.message('A ride has been confirmed', 'OkChalo', tokens)
+              FCM.message('A ride has confirmed', 'OkChalo', tokens)
             ).then(result => {
-              console.log('result: ' + JSON.stringify(result));
+              console.log('RIDE CONFIRMED : ' + JSON.stringify(tokens));
               res.send(data);
             }).catch(e => { res.send(e) });
           }
